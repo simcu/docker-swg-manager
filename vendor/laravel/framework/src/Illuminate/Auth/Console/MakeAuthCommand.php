@@ -50,7 +50,7 @@ class MakeAuthCommand extends Command
 
         if (! $this->option('views')) {
             file_put_contents(
-                app_path('Http/Controllers/HomeController.php'),
+                app_path('Http/Controllers/AuthController.php'),
                 $this->compileControllerStub()
             );
 
