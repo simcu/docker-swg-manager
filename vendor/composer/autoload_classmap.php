@@ -6,6 +6,9 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'CreateAclsTable' => $baseDir . '/database/migrations/2016_11_09_182513_create_acls_table.php',
+    'CreateHostsTable' => $baseDir . '/database/migrations/2016_11_09_182509_create_hosts_table.php',
+    'CreateRolesTable' => $baseDir . '/database/migrations/2016_11_09_182440_create_roles_table.php',
     'CreateUsersTable' => $baseDir . '/database/migrations/2016_11_06_173413_create_users_table.php',
     'DatabaseSeeder' => $baseDir . '/database/seeds/DatabaseSeeder.php',
     'File_Iterator' => $vendorDir . '/phpunit/php-file-iterator/src/Iterator.php',
@@ -533,4 +536,5 @@ return array(
     'SebastianBergmann\\Version' => $vendorDir . '/sebastian/version/src/Version.php',
     'TestCase' => $baseDir . '/tests/TestCase.php',
     'Text_Template' => $vendorDir . '/phpunit/php-text-template/src/Template.php',
+    'UserRoleRelations' => $baseDir . '/database/migrations/2016_11_09_182611_user_role_relations.php',
 );

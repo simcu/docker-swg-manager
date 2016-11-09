@@ -283,6 +283,9 @@ class ComposerStaticInit498b9e8f4ce6ac06c04fd308da3ad8c9
     );
 
     public static $classMap = array (
+        'CreateAclsTable' => __DIR__ . '/../..' . '/database/migrations/2016_11_09_182513_create_acls_table.php',
+        'CreateHostsTable' => __DIR__ . '/../..' . '/database/migrations/2016_11_09_182509_create_hosts_table.php',
+        'CreateRolesTable' => __DIR__ . '/../..' . '/database/migrations/2016_11_09_182440_create_roles_table.php',
         'CreateUsersTable' => __DIR__ . '/../..' . '/database/migrations/2016_11_06_173413_create_users_table.php',
         'DatabaseSeeder' => __DIR__ . '/../..' . '/database/seeds/DatabaseSeeder.php',
         'File_Iterator' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Iterator.php',
@@ -810,6 +813,7 @@ class ComposerStaticInit498b9e8f4ce6ac06c04fd308da3ad8c9
         'SebastianBergmann\\Version' => __DIR__ . '/..' . '/sebastian/version/src/Version.php',
         'TestCase' => __DIR__ . '/../..' . '/tests/TestCase.php',
         'Text_Template' => __DIR__ . '/..' . '/phpunit/php-text-template/src/Template.php',
+        'UserRoleRelations' => __DIR__ . '/../..' . '/database/migrations/2016_11_09_182611_user_role_relations.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

@@ -3,6 +3,7 @@
 namespace App\Http;
 
 use App\Http\Middleware\Auth;
+use App\Http\Middleware\Permission;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -48,6 +49,7 @@ class Kernel extends HttpKernel
      */
     protected $routeMiddleware = [
         'auth' => Auth::class,
+        'permission' => Permission::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
         'can' => \Illuminate\Auth\Middleware\Authorize::class,

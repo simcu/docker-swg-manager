@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use Carbon\Carbon;
 use Hash;
 use Illuminate\Http\Request;
 use Session;
+use Cache;
+use Redis;
 
 class AuthController extends Controller
 {
@@ -44,7 +47,11 @@ class AuthController extends Controller
     {
         if ($r->input('ref')) {
             Session(['logined.last_url' => $r->input('ref')]);
-            return redirect($r->input('ref'));
+            $token = md5(time() . rand(1, 2832837) . $r->input('ref') . session('logined.login_time'));
+            $exp = Carbon::now()->addSeconds(Cache::get('config_token_expire', 600));
+            Cache::put('token_' . $token, session('logined.user.id'), $exp);
+            $bkurl = $r->input('ref');
+            return redirect($bkurl . ((strpos($bkurl, '?') !== false) ? '&' : '?') . 'swg_token=' . $token);
         } else {
             return view('home');
         }

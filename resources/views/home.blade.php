@@ -80,6 +80,9 @@
             <div class="form-group m-b-20">
                 授权访问列表：
             </div>
+            @if(session('logined.user')->roles()->where('id', 1)->first())
+                <p><a href="/admin">网关系统管理后台 - http://{{{$_SERVER['HTTP_HOST']}}}/admin</a></p>
+            @endif
         </div>
     </div>
     <!-- end login -->

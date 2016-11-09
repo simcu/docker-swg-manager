@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class Auth
+class Permission
 {
     /**
      * Handle an incoming request.
@@ -15,15 +15,9 @@ class Auth
      */
     public function handle($request, Closure $next)
     {
-        if (!session('logined')) {
-            if ($request->input('ref')) {
-                return redirect('/login?ref=' . $request->input('ref'));
-            } else {
-                return redirect('/login');
-
-            }
+        if (!session('logined.user')->roles()->where('id', 1)->first()) {
+            return redirect('/');
         }
-
         return $next($request);
     }
 }
