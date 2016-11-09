@@ -13,6 +13,6 @@ class Role extends Model
 
     public function acls()
     {
-        return $this->hasMany(Acl::class, 'id', 'role_id');
+        return $this->hasMany(Acl::class, 'role_id', 'id');
     }
 }

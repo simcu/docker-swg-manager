@@ -53,7 +53,18 @@ class AuthController extends Controller
             $bkurl = $r->input('ref');
             return redirect($bkurl . ((strpos($bkurl, '?') !== false) ? '&' : '?') . 'swg_token=' . $token);
         } else {
-            return view('home');
+            $urs = session('logined.user')->roles;
+            $list = [];
+            foreach ($urs as $ur) {
+                foreach ($ur->acls as $acl) {
+                    $h = $acl->host;
+                    $list[$h->id] = [
+                        'name' => $h->name,
+                        'url' => $h->url
+                    ];
+                }
+            }
+            return view('home', ['list' => $list]);
         }
     }
 
