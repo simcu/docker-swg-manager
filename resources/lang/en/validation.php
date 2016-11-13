@@ -113,5 +113,5 @@ return [
     */
 
     'attributes' => [],
-
+    'password' => '旧密码错误'
 ];

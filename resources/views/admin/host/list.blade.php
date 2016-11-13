@@ -20,7 +20,7 @@
                         <td>{{{$v->name}}}</td>
                         <td>{{{$v->url}}}</td>
                         <td>{{{$v->proxy}}}</td>
-                        <td>删除</td>
+                        <td><a href="/admin/hosts/del?id={{{$v->id}}}">删除</a></td>
                     </tr>
                 @endforeach
                 </tbody>

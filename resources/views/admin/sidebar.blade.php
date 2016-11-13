@@ -13,7 +13,7 @@
                 </a>
                 <ul class="sub-menu">
                     <li><a href="/admin/acls">授权列表</a></li>
-                    <li><a href="index_v2.html">添加权限</a></li>
+                    <li><a href="/admin/acls/add">添加权限</a></li>
                 </ul>
             </li>
             <li class="has-sub active">
@@ -24,7 +24,7 @@
                 </a>
                 <ul class="sub-menu">
                     <li><a href="/admin/users">用户列表</a></li>
-                    <li><a href="email_inbox_v2.html">添加用户</a></li>
+                    <li><a href="/admin/users/add">添加用户</a></li>
                 </ul>
             </li>
             <li class="has-sub active">
@@ -35,7 +35,7 @@
                 </a>
                 <ul class="sub-menu">
                     <li><a href="/admin/roles">角色列表</a></li>
-                    <li><a href="ui_typography.html">添加角色</a></li>
+                    <li><a href="/admin/roles/add">添加角色</a></li>
                 </ul>
             </li>
             <li class="has-sub active">
@@ -46,7 +46,7 @@
                 </a>
                 <ul class="sub-menu">
                     <li><a href="/admin/hosts">网站列表</a></li>
-                    <li><a href="form_plugins.html">添加网站</a></li>
+                    <li><a href="/admin/hosts/add">添加网站</a></li>
                 </ul>
             </li>
             <li class="has-sub active">
@@ -57,7 +57,7 @@
                 </a>
                 <ul class="sub-menu">
                     <li><a href="/admin/config">配置管理</a></li>
-                    <li><a href="form_plugins.html">同步规则</a></li>
+                    <li><a href="/admin/sync">同步规则</a></li>
                 </ul>
             </li>
             <!-- begin sidebar minify button -->

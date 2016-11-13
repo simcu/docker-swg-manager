@@ -30,6 +30,44 @@ class AdminController extends Controller
         ]);
     }
 
+    public function addHost()
+    {
+        return view('admin.host.add', [
+            'act_name' => '添加主机',
+            'act_desc' => '添加需要代理的Web服务'
+        ]);
+    }
+
+    public function doAddHost(Request $r)
+    {
+        $this->validate($r, [
+            'name' => 'required',
+            'url' => 'required|unique:hosts',
+            'proxy' => 'required',
+        ]);
+        $h = new Host;
+        $h->name = $r->input('name');
+        $h->url = $r->input('url');
+        $h->proxy = $r->input('proxy');
+        $h->status = 1;
+        if ($h->save()) {
+            return redirect('/admin/hosts');
+        } else {
+            return redirect()->back()->with(['alert' => 'Save Faild']);
+        }
+    }
+
+    public function delHost(Request $r)
+    {
+        $this->validate($r, [
+            'id' => 'required|exists:hosts,id'
+        ]);
+        $h = Host::find($r->input('id'));
+        $h->acls()->delete();
+        $h->delete();
+        return redirect('/admin/hosts');
+    }
+
     public function users()
     {
         return view('admin.user.list', [

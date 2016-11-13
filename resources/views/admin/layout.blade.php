@@ -76,9 +76,6 @@
                         <span class="hidden-xs">Hi, {{session('logined.user')->username}}</span>
                     </a>
                     <ul class="dropdown-menu animated fadeInLeft">
-                        <li class="arrow"></li>
-                        <li><a href="javascript:;">修改密码</a></li>
-                        <li class="divider"></li>
                         <li><a href="/">返回主页</a></li>
                         <li class="divider"></li>
                         <li><a href="/logout">退出登录</a></li>
@@ -228,6 +225,9 @@
 <script>
     $(document).ready(function () {
         App.init();
+        @if (Session::has('alert'))
+            alert('{{Session::pull('alert')}}');
+        @endif
     });
 </script>
 </body>
