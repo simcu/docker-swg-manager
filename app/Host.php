@@ -8,6 +8,6 @@ class Host extends Model
 {
     public function acls()
     {
-        return $this->hasMany(Acl::class, 'id', 'host_id');
+        return $this->hasMany(Acl::class, 'host_id', 'id');
     }
 }
