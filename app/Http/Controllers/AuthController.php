@@ -68,6 +68,23 @@ class AuthController extends Controller
         }
     }
 
+    public function password()
+    {
+        return view('password');
+    }
+
+    public function changepass(Request $r)
+    {
+        $this->validate($r, [
+            'oldpass' => 'required|password:' . session('logined.user')->id,
+            'password' => 'required|confirmed|min:8'
+        ]);
+        $u = User::find(session('logined.user')->id);
+        $u->password = bcrypt($r->input('password'));
+        $u->save();
+        return redirect('/');
+    }
+
     private function redirectUrl($r)
     {
         if ($r->input('ref')) {

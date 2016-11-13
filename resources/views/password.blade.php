@@ -6,7 +6,7 @@
 <!--<![endif]-->
 <head>
     <meta charset="utf-8"/>
-    <title>登录 | 和创未来</title>
+    <title>修改密码 | 和创未来</title>
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
     <meta content="" name="description"/>
     <meta content="" name="author"/>
@@ -53,7 +53,7 @@
         <div class="login-header">
             <div class="brand">
                 <span class="logo"></span> 和创未来
-                <small>内部系统统一认证中心 - 登录</small>
+                <small>内部系统统一认证中心 - 修改密码</small>
             </div>
             <div class="icon">
                 <i class="material-icons">lock</i>
@@ -61,31 +61,25 @@
         </div>
         <!-- end brand -->
         <div class="login-content">
-
-            <div class="form-group m-b-20">
-                登录用户： {{session('logined.user.username')}} （<a href="/password">修改密码</a>）
-            </div>
-            <div class="form-group m-b-20">
-                登录时间：{{date("Y-m-d H:i:s",session('logined.login_time'))}}
-            </div>
-            <div class="form-group m-b-20">
-                最后访问：<br>
-                {{session('logined.last_url',false)?session('logined.last_url'):"没有访问过要授权的系统"}}
-            </div>
-            <br>
-            <div class="login-buttons">
-                <a href="/logout" class="btn btn-info btn-block btn-lg">退出登录</a>
-            </div>
-            <br>
-            <div class="form-group m-b-20">
-                授权访问列表：
-            </div>
-            @if(session('logined.user')->roles()->where('id', 1)->first())
-                <p><a href="/admin">网关系统管理后台 <br> http://{{{$_SERVER['HTTP_HOST']}}}/admin</a></p>
-            @endif
-            @foreach($list as $item)
-                <p><a href="http://{{{$item['url']}}}">{{{$item['name']}}} <br> http://{{{$item['url']}}}</a></p>
-            @endforeach
+            <form method="POST" class="margin-bottom-0">
+                @if($errors->has('oldpass')) <p style="color: red">{{$errors->first('oldpass')}}</p>  @endif
+                <div class="form-group m-b-20">
+                    <input type="password" class="form-control input-lg" name="oldpass" placeholder="旧密码"/>
+                </div>
+                @if($errors->has('password')) <p style="color: red">{{$errors->first('password')}}</p>  @endif
+                <div class="form-group m-b-20">
+                    <input type="password" class="form-control input-lg has-error" name="password" placeholder="新密码"/>
+                </div>
+                <div class="form-group m-b-20">
+                    <input type="password" class="form-control input-lg" name="password_confirmation" placeholder="再输一次"/>
+                </div>
+                {{ csrf_field() }}
+                <div class="login-buttons">
+                    <button type="submit" class="btn btn-info btn-block btn-lg">修改密码</button>
+                </div>
+                <br>
+                <a href="/"><< 返回首页</a>
+            </form>
         </div>
     </div>
     <!-- end login -->
@@ -112,6 +106,9 @@
 <!-- ================== END PAGE LEVEL JS ================== -->
 
 <script>
+    @if (session('msg'))
+           alert("{{ session('msg') }}")
+    @endif
     $(document).ready(function () {
         App.init();
         LoginV2.init();
