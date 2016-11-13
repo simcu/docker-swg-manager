@@ -5,11 +5,10 @@ namespace App\Http\Controllers;
 use App\Host;
 use App\User;
 use Carbon\Carbon;
-use Hash;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
-use Session;
-use Cache;
-use Redis;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Cache;
 
 class AuthController extends Controller
 {
