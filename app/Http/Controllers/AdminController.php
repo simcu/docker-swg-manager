@@ -77,6 +77,42 @@ class AdminController extends Controller
         ]);
     }
 
+    public function addUser()
+    {
+        return view('admin.user.add', [
+            'act_name' => '添加用户',
+            'act_desc' => '系统用户凭证',
+        ]);
+    }
+
+    public function doAddUser(Request $r)
+    {
+        $this->validate($r, [
+            'username' => 'required|unique:users',
+            'password' => 'required|min:8'
+        ]);
+        $u = new User;
+        $u->username = $r->input('username');
+        $u->password = bcrypt($r->input('password'));
+        $u->status = 1;
+        if ($u->save()) {
+            return redirect('/admin/users');
+        } else {
+            return back()->with(['alert' => 'Add User Failed']);
+        }
+    }
+
+    public function delUser(Request $r)
+    {
+        $this->validate($r, [
+            'id' => 'required|exists:users'
+        ]);
+        $u = User::find($r->input('id'));
+        $u->roles()->detach();
+        $u->delete();
+        return redirect('/admin/users');
+    }
+
     public function roles()
     {
         return view('admin.role.list', [

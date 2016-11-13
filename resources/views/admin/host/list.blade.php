@@ -20,7 +20,9 @@
                         <td>{{{$v->name}}}</td>
                         <td>{{{$v->url}}}</td>
                         <td>{{{$v->proxy}}}</td>
-                        <td><a href="/admin/hosts/del?id={{{$v->id}}}">删除</a></td>
+                        <td>
+                            <a href="javascript:if(confirm('确实要删除吗?'))location='/admin/hosts/del?id={{{$v->id}}}'">删除</a>
+                        </td>
                     </tr>
                 @endforeach
                 </tbody>

@@ -8,6 +8,7 @@
                 <tr>
                     <th>#</th>
                     <th>名称</th>
+                    <th>角色</th>
                     <th>创建时间</th>
                     <th>操作</th>
                 </tr>
@@ -17,8 +18,9 @@
                     <tr>
                         <td>{{{$v->id}}}</td>
                         <td>{{{$v->username}}}</td>
-                        <td>{{date("Y-m-d H:i:s",$v->created_at)}}</td>
-                        <td>删除</td>
+                        <td>@foreach($v->roles as $role) {{$role->name}}<br> @endforeach</td>
+                        <td>{{$v->created_at or '-'}}</td>
+                        <td><a href="javascript:if(confirm('确实要删除吗?'))location='/admin/users/del?id={{{$v->id}}}'">删除</a></td>
                     </tr>
                 @endforeach
                 </tbody>

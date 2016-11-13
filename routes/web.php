@@ -15,6 +15,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/users', 'AdminController@users');
         Route::get('/users/add', 'AdminController@addUser');
         Route::post('/users/add', 'AdminController@doAddUser');
+        Route::get('/users/del', 'AdminController@delUser');
         Route::get('/roles', 'AdminController@roles');
         Route::get('/roles/add', 'AdminController@addRole');
         Route::post('/roles/add', 'AdminController@doAddRole');

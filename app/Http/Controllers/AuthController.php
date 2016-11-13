@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Host;
 use App\User;
 use Carbon\Carbon;
 use Hash;
@@ -53,15 +54,24 @@ class AuthController extends Controller
             $bkurl = $r->input('ref');
             return redirect($bkurl . ((strpos($bkurl, '?') !== false) ? '&' : '?') . 'swg_token=' . $token);
         } else {
-            $urs = session('logined.user')->roles;
             $list = [];
-            foreach ($urs as $ur) {
-                foreach ($ur->acls as $acl) {
-                    $h = $acl->host;
+            if (session('logined.user')->roles()->where('role_id', 1)->first()) {
+                foreach (Host::all() as $h) {
                     $list[$h->id] = [
                         'name' => $h->name,
                         'url' => $h->url
                     ];
+                }
+            } else {
+                $urs = session('logined.user')->roles;
+                foreach ($urs as $ur) {
+                    foreach ($ur->acls as $acl) {
+                        $h = $acl->host;
+                        $list[$h->id] = [
+                            'name' => $h->name,
+                            'url' => $h->url
+                        ];
+                    }
                 }
             }
             return view('home', ['list' => $list]);
