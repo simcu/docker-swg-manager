@@ -33,7 +33,7 @@ class AuthController extends Controller
             session(['logined' => $sess]);
             return $this->redirectUrl($r);
         } else {
-            return redirect('/login')->with('msg', '登录失败，请重试');
+            return back()->with('msg', '登录失败，请重试');
         }
     }
 

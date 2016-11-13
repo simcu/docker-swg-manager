@@ -6,8 +6,8 @@ use App\Acl;
 use App\Host;
 use App\Role;
 use App\User;
-use Cache;
-use Redis;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -100,5 +100,32 @@ class AdminController extends Controller
         Cache::forever('config_token_expire', $r->input('config_token_expire'));
         Cache::forever('config_token_mode', $r->input('config_token_mode'));
         return redirect('/admin/config');
+    }
+
+    public function sync()
+    {
+        $config = [
+            'config_token_expire' => cache('config_token_expire', 600),
+            'config_token_mode' => cache('config_token_mode', 1),
+            'config_token_url' => Redis::get('config_token_url')
+        ];
+        $hosts = Host::all();
+        foreach ($hosts as $h) {
+            $config['host_' . $h->url] = $h->proxy;
+            //管理组默认有所有权限
+            $config['acl_1_' . $h->url] = 1;
+        }
+        $acls = Acl::all();
+        foreach ($acls as $acl) {
+            $config['acl_' . $acl->role_id . '_' . $acl->host->url] = 1;
+        }
+
+        //开始同步规则
+        Cache::flush();
+        foreach ($config as $k => $v) {
+            Redis::set($k, $v);
+        }
+        echo "同步规则完成 .... <a href='/admin'>返回</a>";
+        dd($config);
     }
 }

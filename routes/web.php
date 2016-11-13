@@ -24,6 +24,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/hosts/del', 'AdminController@delHost');
         Route::get('/config', 'AdminController@config');
         Route::post('/config', 'AdminController@saveConfig');
+        Route::get('/sync', 'AdminController@sync');
     });
 });
 
