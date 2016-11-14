@@ -249,7 +249,7 @@ class AdminController extends Controller
             } else {
                 foreach ($user->roles as $ur) {
                     foreach ($ur->hosts as $h) {
-                        $$config['acl_' . $user->id . '_' . $h->url] = 1;
+                        $config['acl_' . $user->id . '_' . $h->url] = 1;
                     }
                 }
             }
