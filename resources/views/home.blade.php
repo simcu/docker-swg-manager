@@ -81,10 +81,10 @@
                 授权访问列表：
             </div>
             @if(session('logined.user')->roles()->where('id', 1)->first())
-                <p><a href="/admin">网关系统管理后台 <br> http://{{{$_SERVER['HTTP_HOST']}}}/admin</a></p>
+                <p><a href="/admin" target="_blank">网关系统管理后台 <br> http://{{{$_SERVER['HTTP_HOST']}}}/admin</a></p>
             @endif
             @foreach($list as $item)
-                <p><a href="http://{{{$item['url']}}}">{{{$item['name']}}} <br> http://{{{$item['url']}}}</a></p>
+                <p><a href="http://{{{$item['url']}}}" target="_blank">{{{$item['name']}}} <br> http://{{{$item['url']}}}</a></p>
             @endforeach
         </div>
     </div>
