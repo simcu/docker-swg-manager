@@ -8,12 +8,12 @@
             <li class="has-sub active">
                 <a href="javascript:;">
                     <b class="caret pull-right"></b>
-                    <i class="material-icons">lock</i>
-                    <span>访问权限管理</span>
+                    <i class="material-icons">toys</i>
+                    <span>用户角色管理</span>
                 </a>
                 <ul class="sub-menu">
-                    <li><a href="/admin/acls">授权列表</a></li>
-                    <li><a href="/admin/acls/add">添加权限</a></li>
+                    <li><a href="/admin/roles">角色列表</a></li>
+                    <li><a href="/admin/roles/add">添加角色</a></li>
                 </ul>
             </li>
             <li class="has-sub active">
@@ -25,17 +25,6 @@
                 <ul class="sub-menu">
                     <li><a href="/admin/users">用户列表</a></li>
                     <li><a href="/admin/users/add">添加用户</a></li>
-                </ul>
-            </li>
-            <li class="has-sub active">
-                <a href="javascript:;">
-                    <b class="caret pull-right"></b>
-                    <i class="material-icons">toys</i>
-                    <span>用户角色管理</span>
-                </a>
-                <ul class="sub-menu">
-                    <li><a href="/admin/roles">角色列表</a></li>
-                    <li><a href="/admin/roles/add">添加角色</a></li>
                 </ul>
             </li>
             <li class="has-sub active">

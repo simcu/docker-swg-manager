@@ -12,15 +12,6 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
-    public function acls()
-    {
-        return view('admin.acl.list', [
-            'act_name' => '授权列表',
-            'act_desc' => '角色可以访问的资源',
-            'list' => Acl::all()
-        ]);
-    }
-
     public function hosts()
     {
         return view('admin.host.list', [
@@ -49,7 +40,6 @@ class AdminController extends Controller
         $h->name = $r->input('name');
         $h->url = $r->input('url');
         $h->proxy = $r->input('proxy');
-        $h->status = 1;
         if ($h->save()) {
             return redirect('/admin/hosts');
         } else {
@@ -94,7 +84,6 @@ class AdminController extends Controller
         $u = new User;
         $u->username = $r->input('username');
         $u->password = bcrypt($r->input('password'));
-        $u->status = 1;
         if ($u->save()) {
             return redirect('/admin/users');
         } else {
@@ -120,6 +109,102 @@ class AdminController extends Controller
             'act_desc' => '用于授权资源的用户组',
             'list' => Role::all()
         ]);
+    }
+
+    public function addRole()
+    {
+        return view('admin.role.add', [
+            'act_name' => '添加角色',
+            'act_desc' => '系统授权对象添加',
+        ]);
+    }
+
+    public function doAddRole(Request $r)
+    {
+        $this->validate($r, [
+            'name' => 'required|unique:roles',
+        ]);
+        $role = new Role;
+        $role->name = $r->input('name');
+        if ($role->save()) {
+            return redirect('/admin/roles');
+        } else {
+            return back()->with(['alert' => 'Add Role Failed']);
+        }
+    }
+
+    public function delRole(Request $r)
+    {
+        $this->validate($r, [
+            'id' => 'required|exists:roles'
+        ]);
+        $role = Role::find($r->input('id'));
+        $role->users()->detach();
+        $role->delete();
+        return redirect('/admin/roles');
+    }
+
+    public function detailRole(Request $r)
+    {
+        $role = Role::find($r->input('id'));
+        if (!$role) {
+            return back()->with(['alert' => 'Role Not Found!']);
+        }
+        $has_host = [];
+        foreach ($role->acls as $ra) {
+            $has_host[] = $ra->host;
+        }
+        return view('admin.role.detail', [
+            'act_name' => '角色详情',
+            'act_desc' => '>> ' . $role->name,
+            'role' => $role,
+            'users' => User::all()->diff($role->users),
+            'hosts' => Host::all()->diff($has_host)
+        ]);
+    }
+
+    public function detailRoleAddHost(Request $r)
+    {
+        $this->validate($r, [
+            'rid' => 'required|exists:roles,id',
+            'hid' => 'required|exists:hosts,id'
+        ]);
+        $role = Role::find($r->input('rid'));
+        $role->hosts()->attach(Host::find($r->input('hid')));
+        return redirect('/admin/roles/detail?id=' . $r->input('rid'));
+    }
+
+    public function detailRoleDelHost(Request $r)
+    {
+        $this->validate($r, [
+            'rid' => 'required|exists:roles,id',
+            'hid' => 'required|exists:hosts,id'
+        ]);
+        $role = Role::find($r->input('rid'));
+        $role->hosts()->detach(Host::find($r->input('hid')));
+        return redirect('/admin/roles/detail?id=' . $r->input('rid'));
+    }
+
+    public function detailRoleAddUser(Request $r)
+    {
+        $this->validate($r, [
+            'rid' => 'required|exists:roles,id',
+            'uid' => 'required|exists:users,id'
+        ]);
+        $role = Role::find($r->input('rid'));
+        $role->users()->attach(User::find($r->input('uid')));
+        return redirect('/admin/roles/detail?id=' . $r->input('rid'));
+    }
+
+    public function detailRoleDelUser(Request $r)
+    {
+        $this->validate($r, [
+            'rid' => 'required|exists:roles,id',
+            'uid' => 'required|exists:users,id'
+        ]);
+        $role = Role::find($r->input('rid'));
+        $role->users()->detach(User::find($r->input('uid')));
+        return redirect('/admin/roles/detail?id=' . $r->input('rid'));
     }
 
     public function config()

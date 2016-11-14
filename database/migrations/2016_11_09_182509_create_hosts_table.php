@@ -18,7 +18,6 @@ class CreateHostsTable extends Migration
             $table->string('name');
             $table->string('url');
             $table->string('proxy');
-            $table->integer('status');
             $table->timestamps();
         });
     }

@@ -15,4 +15,9 @@ class Role extends Model
     {
         return $this->hasMany(Acl::class, 'role_id', 'id');
     }
+
+    public function hosts()
+    {
+        return $this->belongsToMany(Host::class, 'acls', 'role_id', 'host_id');
+    }
 }

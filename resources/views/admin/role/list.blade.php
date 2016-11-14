@@ -8,6 +8,8 @@
                 <tr>
                     <th>#</th>
                     <th>角色名称</th>
+                    <th>访问权限</th>
+                    <th>用户列表</th>
                     <th>创建时间</th>
                     <th>操作</th>
                 </tr>
@@ -17,8 +19,37 @@
                     <tr>
                         <td>{{{$v->id}}}</td>
                         <td>{{{$v->name}}}</td>
-                        <td>{{date("Y-m-d H:i:s",$v->created_at)}}</td>
-                        <td>删除</td>
+                        <td>
+                            @if($v->id == 1)
+                                拥有所有权限
+                            @else
+                                @forelse($v->acls as $acl)
+                                    {{$acl->host->name}}
+                                    @if(!$loop->last)
+                                        ,
+                                    @endif
+                                @empty
+                                    -
+                                @endforelse
+                            @endif
+                        </td>
+                        <td>
+                            @forelse($v->users as $user)
+                                {{$user->username}}
+                                @if(!$loop->last)
+                                    ,
+                                @endif
+                            @empty
+                                -
+                            @endforelse
+                        </td>
+                        <td>{{{$v->created_at}}}</td>
+                        <td>
+                            [<a href="/admin/roles/detail?id={{{$v->id}}}">详情</a>]
+                            @unless($v->id == 1)
+                                [<a href="javascript:if(confirm('确实要删除吗?'))location='/admin/roles/del?id={{{$v->id}}}'">删除</a>]
+                            @endunless
+                        </td>
                     </tr>
                 @endforeach
                 </tbody>

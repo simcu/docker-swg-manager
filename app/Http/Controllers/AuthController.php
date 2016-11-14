@@ -23,7 +23,7 @@ class AuthController extends Controller
 
     public function doLogin(Request $r)
     {
-        $u = User::where('username', $r->input('username'))->where('status', 1)->first();
+        $u = User::where('username', $r->input('username'))->first();
         if ($u and Hash::check($r->input('password'), $u->password)) {
             $sess = [
                 'user' => $u,

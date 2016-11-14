@@ -17,7 +17,6 @@ class CreateAclsTable extends Migration
             $table->increments('id');
             $table->integer('role_id');
             $table->integer('host_id');
-            $table->integer('status');
             $table->timestamps();
         });
     }
