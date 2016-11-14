@@ -225,20 +225,34 @@ class AdminController extends Controller
 
     public function sync()
     {
+        //网关配置
         $config = [
             'config_token_expire' => cache('config_token_expire', 600),
             'config_token_mode' => cache('config_token_mode', 1),
             'config_token_url' => Redis::get('config_token_url')
         ];
+
+        //网关代理列表
         $hosts = Host::all();
         foreach ($hosts as $h) {
             $config['host_' . $h->url] = $h->proxy;
-            //管理组默认有所有权限
-            $config['acl_1_' . $h->url] = 1;
         }
-        $acls = Acl::all();
-        foreach ($acls as $acl) {
-            $config['acl_' . $acl->role_id . '_' . $acl->host->url] = 1;
+
+        //用户权限列表
+        $users = User::all();
+        foreach ($users as $user) {
+            $acl_hosts[$user->id] = [];
+            if ($user->roles()->where('role_id', 1)->first()) {
+                foreach (Host::all() as $h) {
+                    $config['acl_' . $user->id . '_' . $h->url] = 1;
+                }
+            } else {
+                foreach ($user->roles as $ur) {
+                    foreach ($ur->hosts as $h) {
+                        $$config['acl_' . $user->id . '_' . $h->url] = 1;
+                    }
+                }
+            }
         }
 
         //开始同步规则
