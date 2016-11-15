@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Cache;
+use Gregwar\Captcha\CaptchaBuilder;
 
 class AuthController extends Controller
 {
@@ -23,6 +24,9 @@ class AuthController extends Controller
 
     public function doLogin(Request $r)
     {
+        if(Session::get('captcha') != $r->input('captcha')){
+            return back()->with('msg', '验证码输入错误');
+        }
         $u = User::where('username', $r->input('username'))->first();
         if ($u and Hash::check($r->input('password'), $u->password)) {
             $sess = [
@@ -101,5 +105,22 @@ class AuthController extends Controller
         } else {
             return redirect('/');
         }
+    }
+
+    public function captcha($tmp)
+    {
+        //生成验证码图片的Builder对象，配置相应属性
+        $builder = new CaptchaBuilder;
+        //可以设置图片宽高及字体
+        $builder->build($width = 100, $height = 40, $font = null);
+        //获取验证码的内容
+        $phrase = $builder->getPhrase();
+
+        //把内容存入session
+        Session::flash('captcha', $phrase);
+        //生成图片
+        header("Cache-Control: no-cache, must-revalidate");
+        header('Content-Type: image/jpeg');
+        $builder->output();
     }
 }

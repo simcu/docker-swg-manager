@@ -68,7 +68,12 @@
                 <div class="form-group m-b-20">
                     <input type="password" class="form-control input-lg" name="password" placeholder="Password"/>
                 </div>
+                <div class="form-group m-b-20">
+                    <input style="float:left" type="password" class="form-control input-lg" name="captcha" placeholder="Captcha"/>
+                    <img src="/captcha/{{rand(1123123,9999999999)}}" width="115" height="46" id="captcha_img" onclick="re_captcha()" style="position: absolute; margin-left: -115px;">
+                </div>
                 {{ csrf_field() }}
+                <br><br><br><br>
                 <div class="login-buttons">
                     <button type="submit" class="btn btn-info btn-block btn-lg">登录</button>
                 </div>
@@ -106,6 +111,12 @@
         App.init();
         LoginV2.init();
     });
+
+    function re_captcha() {
+        $url = "/captcha/";
+        $url = $url  + Math.random();
+        document.getElementById('captcha_img').src=$url;
+    }
 </script>
 </body>
 </html>
