@@ -69,7 +69,7 @@
                     <input type="password" class="form-control input-lg" name="password" placeholder="Password"/>
                 </div>
                 <div class="form-group m-b-20">
-                    <input style="float:left" type="password" class="form-control input-lg" name="captcha" placeholder="Captcha"/>
+                    <input style="float:left" type="text" class="form-control input-lg" name="captcha" placeholder="Captcha"/>
                     <img src="/captcha/{{rand(1123123,9999999999)}}" width="115" height="46" id="captcha_img" onclick="re_captcha()" style="position: absolute; margin-left: -115px;">
                 </div>
                 {{ csrf_field() }}
